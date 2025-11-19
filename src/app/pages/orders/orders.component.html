@@ -1,0 +1,41 @@
+<h2 class="title">Your Orders</h2>
+
+<!-- Empty State -->
+<div *ngIf="orders.length === 0" class="empty-box">
+  <img src="assets/empty-orders.png" class="empty-img" />
+  <h3>No Orders Yet</h3>
+  <p>Place your first order and track it here!</p>
+</div>
+
+<!-- List Orders -->
+<div *ngFor="let o of orders" class="order-card">
+
+  <img [src]="o.items[0].product.img" class="order-img" />
+
+  <div class="info">
+
+    <!-- First row: status + price -->
+    <div class="row">
+      <span class="status" 
+        [class.delivered]="o.status === 'Delivered'"
+        [class.processing]="o.status === 'Processing'">
+        {{ o.status }}
+      </span>
+
+      <span class="amount">₹{{ o.amount }}</span>
+    </div>
+
+    <!-- Date + ID -->
+    <p class="date">Placed on {{ o.date }}</p>
+    <p class="id">{{ o.id }} · {{ o.items.length }} items</p>
+
+    <!-- Reorder -->
+    <button 
+      pButton 
+      label="Reorder"
+      class="reorder-btn"
+      (click)="reorder(o)">
+    </button>
+
+  </div>
+</div>

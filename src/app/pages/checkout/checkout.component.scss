@@ -1,0 +1,26 @@
+.checkout-container {
+  padding: 14px;
+}
+
+.checkout-bar {
+  margin-top: 20px;
+  background: #fff;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.1);
+  position: sticky;
+  bottom: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.pay-btn {
+  width: 100%;
+  background: #2563eb !important;
+  height: 45px;
+  border-radius: 10px !important;
+}

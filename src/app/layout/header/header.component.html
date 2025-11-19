@@ -1,0 +1,26 @@
+<p-menubar class="shadow-2">
+
+    <ng-template pTemplate="start">
+        <span class="text-xl font-bold cursor-pointer flex align-items-center" routerLink="/">
+            <i class="pi pi-heart-fill text-red-500 mr-2"></i>
+            Radhe Shyam Medical
+        </span>
+    </ng-template>
+
+    <ng-template pTemplate="center">
+        <span class="p-input-icon-left hidden md:flex w-20rem">
+            <i class="pi pi-search"></i>
+            <input pInputText placeholder="Search medicines…" class="w-full" />
+        </span>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+
+        <button pButton icon="pi pi-shopping-cart" class="mr-2" routerLink="/cart"
+            badgePosition="top-right"></button>
+
+        <button pButton icon="pi pi-user" routerLink="/profile"></button>
+
+    </ng-template>
+
+</p-menubar>

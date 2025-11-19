@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
-import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 
 @Component({
@@ -13,8 +11,6 @@ import { Card } from 'primeng/card';
     CommonModule,
     FormsModule,
     InputText,
-    InputTextarea,
-    Button,
     Card
   ],
   templateUrl: './profile.component.html',

@@ -1,11 +1,13 @@
 <h2 class="cart-title">Your Cart</h2>
 
+<!-- EMPTY STATE -->
 <div *ngIf="cart.length === 0" class="empty-box">
     <img src="assets/empty-cart.png" class="empty-img" />
     <h3>Your cart is empty</h3>
     <p>Add medicines to save big!</p>
 </div>
 
+<!-- CART ITEMS -->
 <div *ngFor="let item of cart" class="cart-card">
 
     <img [src]="item.product.img" class="cart-img" />
@@ -21,27 +23,44 @@
 
         <!-- Quantity Controls -->
         <div class="qty-box">
-            <button pButton icon="pi pi-minus" severity="secondary" (click)="decrease(item.product.id)"></button>
+            <button 
+                pButton 
+                icon="pi pi-minus" 
+                severity="secondary"
+                class="qty-btn"
+                (click)="decrease(item.product.id)">
+            </button>
 
             <span class="qty">{{ item.qty }}</span>
 
-            <button pButton icon="pi pi-plus" severity="primary" (click)="increase(item.product.id)"></button>
+            <button 
+                pButton 
+                icon="pi pi-plus" 
+                severity="primary"
+                class="qty-btn"
+                (click)="increase(item.product.id)">
+            </button>
         </div>
 
         <button class="remove-btn" (click)="remove(item.product.id)">
+            <i class="pi pi-trash"></i>
             Remove
         </button>
 
     </div>
 </div>
 
-<!-- TOTAL + CHECKOUT -->
+<!-- CHECKOUT -->
 <div *ngIf="cart.length > 0" class="checkout-box">
     <div class="total-row">
         <h3>Total:</h3>
         <h3 class="total">₹{{ total }}</h3>
     </div>
 
-    <button pButton label="Proceed to Checkout" class="checkout-btn" (click)="goToCheckout()">
+    <button 
+      pButton 
+      label="Proceed to Checkout" 
+      class="checkout-btn"
+      (click)="goToCheckout()">
     </button>
 </div>

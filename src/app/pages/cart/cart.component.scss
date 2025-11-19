@@ -1,18 +1,19 @@
 .cart-title {
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-bottom: 1.4rem;
 }
 
 /* EMPTY STATE */
 .empty-box {
     text-align: center;
-    padding: 40px 0;
+    padding: 50px 0;
 }
 
 .empty-img {
     width: 180px;
-    opacity: 0.7;
+    opacity: 0.85;
+    animation: fadeIn 0.6s ease;
 }
 
 .empty-box h3 {
@@ -25,18 +26,25 @@
 /* CART ITEM CARD */
 .cart-card {
     display: flex;
-    background: #fff;
-    padding: 14px;
-    border-radius: 16px;
-    margin-bottom: 14px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+    transition: transform 0.2s ease;
+}
+
+.cart-card:hover {
+    transform: translateY(-3px);
 }
 
 .cart-img {
-    width: 100px;
-    height: 100px;
+    width: 95px;
+    height: 95px;
     object-fit: contain;
-    margin-right: 12px;
+    margin-right: 14px;
+    border-radius: 10px;
+    background: #f8fafc;
 }
 
 .cart-info {
@@ -45,84 +53,110 @@
 
 /* Product name */
 .name {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0;
-    min-height: 38px;
-    max-height: 38px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 6px;
+    line-height: 1.3;
+    height: 40px;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 /* Price styles */
 .price-row {
     display: flex;
     align-items: center;
-    margin: 6px 0 12px;
+    margin: 2px 0 12px;
 }
 
 .price {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 800;
     color: #16a34a;
 }
 
 .mrp {
     margin-left: 8px;
     text-decoration: line-through;
-    color: #999;
+    color: #a1a1a1;
 }
 
-/* QUANTITY BOX */
+/* QUANTITY CONTROLS */
 .qty-box {
     display: flex;
     align-items: center;
+    margin-top: 5px;
 }
 
-.qty-box button {
+.qty-btn {
     border-radius: 50% !important;
     width: 36px !important;
     height: 36px !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .qty {
-    margin: 0 12px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    margin: 0 14px;
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 
+/* REMOVE BUTTON */
 .remove-btn {
-    margin-top: 8px;
+    margin-top: 10px;
     background: transparent;
     border: none;
     color: #ef4444;
-    font-size: 0.9rem;
+    font-size: .95rem;
+    font-weight: 600;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 0;
+    transition: color 0.2s ease;
+}
+
+.remove-btn:hover {
+    color: #dc2626;
 }
 
 /* CHECKOUT BAR */
 .checkout-box {
     position: sticky;
-    bottom: 0;
-    background: #fff;
-    padding: 16px;
-    border-radius: 16px 16px 0 0;
-    box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.08);
+    bottom: 60px; /* stay above bottom navigation */
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(4px);
 }
 
 .total-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 }
 
 .total {
     color: #2563eb;
-    font-weight: 700;
+    font-weight: 800;
+    font-size: 1.4rem;
 }
 
+/* CHECKOUT BUTTON */
 .checkout-btn {
     width: 100%;
-    height: 45px;
-    border-radius: 10px !important;
+    height: 50px;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    color: white !important;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: .3px;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }

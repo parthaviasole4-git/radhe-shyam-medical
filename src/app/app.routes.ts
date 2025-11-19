@@ -17,6 +17,7 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { OrderTrackingComponent } from './pages/orders/order-tracking/order-tracking.component';
 
 /* OPTIONAL GUARDS */
 // import { authGuard } from './core/guards/auth-guard';
@@ -70,6 +71,10 @@ export const routes: Routes = [
         path: 'orders',
         component: OrdersComponent,
         // canActivate: [authGuard]
+      },
+      {
+        path: 'track/:id',
+        component: OrderTrackingComponent,
       },
       {
         path: 'profile',

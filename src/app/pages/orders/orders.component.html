@@ -1,40 +1,47 @@
 <h2 class="title">Your Orders</h2>
 
-<!-- Empty State -->
+<!-- EMPTY STATE -->
 <div *ngIf="orders.length === 0" class="empty-box">
-  <img src="assets/empty-orders.png" class="empty-img" />
+  <i class="pi pi-shopping-bag empty-icon"></i>
   <h3>No Orders Yet</h3>
-  <p>Place your first order and track it here!</p>
+  <p>Start ordering your medicines and track them here!</p>
 </div>
 
-<!-- List Orders -->
+<!-- ORDER LIST -->
 <div *ngFor="let o of orders" class="order-card">
 
   <img [src]="o.items[0].product.img" class="order-img" />
 
   <div class="info">
 
-    <!-- First row: status + price -->
+    <!-- STATUS + AMOUNT -->
     <div class="row">
-      <span class="status" 
-        [class.delivered]="o.status === 'Delivered'"
-        [class.processing]="o.status === 'Processing'">
+      <span class="status"
+        [ngClass]="{
+          'placed': o.status === 'Order Placed',
+          'processing': o.status === 'Processing',
+          'shipped': o.status === 'Shipped',
+          'out': o.status === 'Out for Delivery',
+          'delivered': o.status === 'Delivered'
+        }">
         {{ o.status }}
       </span>
 
       <span class="amount">₹{{ o.amount }}</span>
     </div>
 
-    <!-- Date + ID -->
     <p class="date">Placed on {{ o.date }}</p>
-    <p class="id">{{ o.id }} · {{ o.items.length }} items</p>
+    <p class="id">Order #{{ o.id }} • {{ o.items.length }} items</p>
 
-    <!-- Reorder -->
-    <button 
-      pButton 
-      label="Reorder"
-      class="reorder-btn"
-      (click)="reorder(o)">
+    <!-- TRACKING BAR -->
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width]="getProgress(o.status)"></div>
+    </div>
+
+    <button pButton label="Track Order" icon="pi pi-map-marker" class="track-btn" (click)="track(o)">
+    </button>
+
+    <button pButton label="Reorder" icon="pi pi-refresh" class="reorder-btn mt-2" (click)="reorder(o)">
     </button>
 
   </div>

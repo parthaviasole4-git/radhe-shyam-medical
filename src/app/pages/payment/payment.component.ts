@@ -17,14 +17,14 @@ import { OrdersService } from '../../core/services/orders.service';
     FormsModule,
     ButtonModule,
     RadioButtonModule,
-    ToastModule
+    ToastModule,
   ],
   providers: [MessageService],
   templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.scss']
+  styleUrls: ['./payment.component.scss'],
 })
 export class PaymentComponent {
-
+  isProcessing = false;
   paymentMethod = 'cod'; // default COD
   total = 0;
 
@@ -45,23 +45,24 @@ export class PaymentComponent {
         severity: 'warn',
         summary: 'Only COD allowed',
         detail: 'Currently only Cash on Delivery is supported.',
-        life: 1500
+        life: 1500,
       });
       return;
     }
 
-    // prepare order items
-    const items = this.cart.getCartItems();
+    this.isProcessing = true;
 
-    // place order
-    const order = this.orders.placeOrder(items, this.total);
+    setTimeout(() => {
+      const items = this.cart.getCartItems();
+      const order = this.orders.placeOrder(items, this.total);
 
-    // clear cart
-    this.cart.clearCart();
+      this.cart.clearCart();
 
-    // redirect
-    this.router.navigate(['/orders'], {
-      state: { orderId: order.id }
-    });
+      this.isProcessing = false;
+
+      this.router.navigate(['/payment-success'], {
+        state: { orderId: order.id },
+      });
+    }, 1500);
   }
 }

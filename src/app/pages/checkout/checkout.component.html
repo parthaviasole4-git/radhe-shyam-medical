@@ -2,16 +2,52 @@
 
     <h2>Delivery Details</h2>
 
-    <!-- your delivery form fields later -->
+    <!-- SAVED ADDRESS -->
+    <div *ngIf="address; else noAddress" class="address-card shadow-2">
+        <h4>{{ address.name }}</h4>
+        <p>{{ address.house }}, {{ address.area }}</p>
+        <p>{{ address.city }} - {{ address.pincode }}</p>
+        <p>Phone: {{ address.phone }}</p>
 
+        <button pButton label="Change Address" class="change-btn mt-2" (click)="openAddressDialog()">
+        </button>
+    </div>
+
+    <!-- NO ADDRESS -->
+    <ng-template #noAddress>
+        <div class="empty-address-card" (click)="openAddressDialog()">
+            <i class="pi pi-plus-circle"></i>
+            <h4>Add Delivery Address</h4>
+            <p>Tap to add a new address</p>
+        </div>
+    </ng-template>
+
+    <!-- CHECKOUT BAR -->
     <div class="checkout-bar">
         <div class="row">
             <span>Total</span>
             <strong>₹{{ total }}</strong>
         </div>
 
-        <button pButton label="Proceed to Payment" class="pay-btn" (click)="goToPayment()">
+        <button pButton label="Proceed to Payment" class="pay-btn" (click)="goToPayment()" [disabled]="!address">
         </button>
     </div>
 
 </div>
+
+<!-- ADDRESS FORM DIALOG -->
+<p-dialog [(visible)]="addressPopup" class="mb-3" [modal]="true" [closable]="true" header="Add Delivery Address"
+    [style]="{ width: '90%' }">
+
+    <div class="form">
+        <input type="text" placeholder="Full Name" [(ngModel)]="form.name">
+        <input type="text" placeholder="House No, Street" [(ngModel)]="form.house">
+        <input type="text" placeholder="Area / Landmark" [(ngModel)]="form.area">
+        <input type="text" placeholder="City" [(ngModel)]="form.city">
+        <input type="text" placeholder="Pincode" [(ngModel)]="form.pincode">
+        <input type="text" placeholder="Phone Number" [(ngModel)]="form.phone">
+
+        <button pButton label="Save Address" class="save-btn mt-3" (click)="saveAddress()"></button>
+    </div>
+
+</p-dialog>

@@ -54,7 +54,7 @@ export class OrdersService {
       date: new Date().toDateString(),
       items,
       amount,
-      status: 'Processing'
+      status: 'Delivered'
     };
 
     this.ordersList.unshift(newOrder); // add on top like real apps

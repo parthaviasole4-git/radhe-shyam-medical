@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 import { OrdersService } from '../../core/services/orders.service';
 
 @Component({
@@ -12,16 +13,35 @@ import { OrdersService } from '../../core/services/orders.service';
 })
 export class OrdersComponent {
 
-  orders: any = [];
+  orders: any[] = [];
 
-  constructor(private ordersService: OrdersService) {}
+  constructor(
+    private ordersService: OrdersService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.orders = this.ordersService.getAllOrders();
   }
 
+  track(order: any) {
+    this.router.navigate(['/track', order.id], {
+      state: { order }
+    });
+  }
+
   reorder(order: any) {
-    console.log('Reorder clicked:', order.id);
-    // You can implement reorder via CartService if needed
+    console.log('Reorder:', order.id);
+  }
+
+  getProgress(status: string) {
+    switch (status) {
+      case 'Order Placed': return '20%';
+      case 'Processing': return '40%';
+      case 'Shipped': return '60%';
+      case 'Out for Delivery': return '80%';
+      case 'Delivered': return '100%';
+      default: return '10%';
+    }
   }
 }

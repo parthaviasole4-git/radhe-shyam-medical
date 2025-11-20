@@ -76,8 +76,27 @@
   transition: width .3s;
 }
 
-.track-btn, .reorder-btn {
-  width: 100%;
-  height: 40px;
-  border-radius: 10px !important;
+.track-btn {
+    width: 100%;
+    border-radius: 30px !important;
+    padding: 10px 16px;
+    background: #2563eb !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.25);
+    transition: 0.25s ease;
+}
+
+.track-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.35);
+}
+
+.track-btn .pi {
+    font-size: 1rem;
 }

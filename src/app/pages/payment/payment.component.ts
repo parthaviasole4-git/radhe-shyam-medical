@@ -57,7 +57,7 @@ export class PaymentComponent {
       const order = this.orders.placeOrder(items, this.total);
 
       this.cart.clearCart();
-
+      this.cart.updateCartCount();
       this.isProcessing = false;
 
       this.router.navigate(['/payment-success'], {

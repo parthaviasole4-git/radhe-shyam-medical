@@ -7,7 +7,9 @@ import { BehaviorSubject } from 'rxjs';
 export class CartService {
 
   private cart: any[] = [];
+
   cart$ = new BehaviorSubject<any[]>([]);
+  cartCount = new BehaviorSubject<number>(0);
 
   constructor() {
     this.loadCart();
@@ -92,4 +94,11 @@ export class CartService {
       0
     );
   }
+
+  updateCartCount() {
+    const cart: { qty: number }[] = JSON.parse(localStorage.getItem('cart') || '[]');
+    const count = cart.reduce((a: number, b: { qty: number }) => a + b.qty, 0);
+    this.cartCount.next(count);
+  }
+
 }

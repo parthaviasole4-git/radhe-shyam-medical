@@ -5,7 +5,6 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 
 /* AUTH */
 import { LoginComponent } from './pages/auth/login/login.component';
-import { RegisterComponent } from './pages/auth/register/register.component';
 
 /* PAGES */
 import { HomeComponent } from './pages/home/home.component';
@@ -29,11 +28,6 @@ export const routes: Routes = [
   { 
     path: 'login', 
     component: LoginComponent,
-    // canActivate: [guestGuard]
-  },
-  { 
-    path: 'register', 
-    component: RegisterComponent,
     // canActivate: [guestGuard]
   },
 

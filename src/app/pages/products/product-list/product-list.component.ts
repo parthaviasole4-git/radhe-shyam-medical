@@ -60,6 +60,8 @@ export class ProductListComponent {
     const target = event.target as HTMLElement;
     target.classList.add('pulse');
     setTimeout(() => target.classList.remove('pulse'), 250);
+
+    this.cartService.updateCartCount();
   }
 }
 

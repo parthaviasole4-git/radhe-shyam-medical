@@ -16,8 +16,14 @@
 
     <ng-template pTemplate="end">
 
-        <button pButton icon="pi pi-shopping-cart" class="mr-2" routerLink="/cart"
-            badgePosition="top-right"></button>
+        <div class="cart-wrapper" routerLink="/cart">
+            <button pButton icon="pi pi-shopping-cart" class="mr-2">
+            </button>
+
+            <span class="cart-badge" *ngIf="cartCount > 0">
+                {{ cartCount }}
+            </span>
+        </div>
 
         <button pButton icon="pi pi-user" routerLink="/profile"></button>
 

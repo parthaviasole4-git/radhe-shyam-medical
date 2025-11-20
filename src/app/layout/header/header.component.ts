@@ -5,6 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RouterModule } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -21,5 +22,13 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  cartCount = '3';
+
+  cartCount = 1 ;
+
+  constructor(private readonly cartService: CartService) {}
+
+  ngOnInit() {
+    this.cartService.cartCount.subscribe(n => this.cartCount = n);
+  }
+
 }

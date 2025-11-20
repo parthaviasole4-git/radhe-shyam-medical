@@ -7,20 +7,28 @@
 /* EMPTY STATE */
 .empty-box {
     text-align: center;
-    padding: 50px 0;
+    padding: 40px 20px;
+    color: #555;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.empty-img {
-    width: 180px;
-    opacity: 0.85;
-    animation: fadeIn 0.6s ease;
+.empty-icon {
+    font-size: 80px;
+    color: #c7d2fe; /* soft purple */
+    margin-bottom: 15px;
 }
 
 .empty-box h3 {
-    margin-top: 1rem;
-    font-size: 1.4rem;
-    font-weight: 600;
-    opacity: 0.9;
+    font-size: 20px;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+.empty-box p {
+    font-size: 14px;
+    color: #777;
 }
 
 /* CART ITEM CARD */
@@ -159,4 +167,69 @@
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ---------------- OCR Upload ---------------- */
+
+.ocr-container {
+    margin-bottom: 18px;
+}
+
+.ocr-upload-full {
+    width: 100%;
+    background: #eef2ff;
+    border: 2px dashed #c7d2fe;
+    padding: 14px;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 1rem;
+    color: #4f46e5;
+    font-weight: 600;
+    display: block;
+    cursor: pointer;
+}
+
+.ocr-upload-full i {
+    margin-right: 6px;
+}
+
+.ocr-result-card {
+    background: #fff;
+    padding: 16px;
+    border-radius: 14px;
+    margin-top: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    animation: fadeIn .3s ease;
+}
+
+.ocr-result-card h4 {
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* OUTLINE BUTTON (Add to Cart) */
+
+.success-btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px !important;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border: none;
+}
+
+.outline-btn {
+  color: linear-gradient(135deg, #16a34a, #15803d) !important;
+  border: 2px solid #15803d !important;
+  background: white !important;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
+}
+
+.outline-btn:hover {
+  background: #eff6ff !important;
 }

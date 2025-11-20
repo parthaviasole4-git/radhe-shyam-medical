@@ -17,22 +17,30 @@ import { Card } from 'primeng/card';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent {
+
   user = {
     name: '',
     email: '',
     phone: '',
     address: {
-      line1: '',
-      line2: '',
-      landmark: '',
+      house: '',
+      area: '',
       city: '',
+      zip: '',
       state: '',
-      pincode: '',
       country: 'India'
     }
   };
 
+  constructor() {
+    const saved = localStorage.getItem('profile');
+    if (saved) {
+      this.user = JSON.parse(saved);
+    }
+  }
+
   saveProfile() {
+    localStorage.setItem('profile', JSON.stringify(this.user));
     console.log('Profile Saved:', this.user);
   }
 }

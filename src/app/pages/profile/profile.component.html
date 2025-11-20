@@ -16,73 +16,54 @@
         <!-- NAME -->
         <div class="field">
             <label>Name</label>
-            <span class="p-input-icon-left w-full">
-                <input pInputText [(ngModel)]="user.name" placeholder="Full Name" />
-            </span>
+            <input pInputText [(ngModel)]="user.name" placeholder="Full Name" />
         </div>
 
         <!-- EMAIL -->
         <div class="field">
             <label>Email</label>
-            <span class="p-input-icon-left w-full">
-                <input pInputText type="email" [(ngModel)]="user.email" placeholder="you@example.com" />
-            </span>
+            <input pInputText type="email" [(ngModel)]="user.email" placeholder="you@example.com" />
         </div>
 
         <!-- PHONE -->
         <div class="field">
             <label>Phone Number</label>
-            <span class="p-input-icon-left w-full">
-                <input pInputText maxlength="10" [(ngModel)]="user.phone" placeholder="9876543210" />
-            </span>
+            <input pInputText maxlength="10" [(ngModel)]="user.phone" placeholder="9876543210" />
         </div>
 
         <h3 class="address-title mt-3 mb-2">Delivery Address</h3>
 
-        <!-- ADDRESS LINE 1 -->
         <div class="field">
-            <label>Address Line 1</label>
-            <input pInputText [(ngModel)]="user.address.line1" placeholder="House No, Building" />
+            <label>House / Building</label>
+            <input pInputText [(ngModel)]="user.address.house" placeholder="House No, Building" />
         </div>
 
-        <!-- ADDRESS LINE 2 -->
         <div class="field">
-            <label>Address Line 2</label>
-            <input pInputText [(ngModel)]="user.address.line2" placeholder="Street, Nearby Area" />
+            <label>Area / Landmark</label>
+            <input pInputText [(ngModel)]="user.address.area" placeholder="Street / Landmark" />
         </div>
 
-        <!-- LANDMARK -->
-        <div class="field">
-            <label>Landmark</label>
-            <input pInputText [(ngModel)]="user.address.landmark" placeholder="e.g. Near Axis Bank ATM" />
-        </div>
-
-        <!-- CITY -->
         <div class="field">
             <label>City</label>
             <input pInputText [(ngModel)]="user.address.city" placeholder="Your City" />
         </div>
 
-        <!-- STATE -->
+        <div class="field">
+            <label>Pincode</label>
+            <input pInputText maxlength="6" [(ngModel)]="user.address.zip" placeholder="6 digit pincode" />
+        </div>
+
         <div class="field">
             <label>State</label>
             <input pInputText [(ngModel)]="user.address.state" placeholder="Your State" />
         </div>
 
-        <!-- PINCODE -->
-        <div class="field">
-            <label>Pincode</label>
-            <input pInputText maxlength="6" [(ngModel)]="user.address.pincode" placeholder="6 digit pincode" />
-        </div>
-
-        <!-- COUNTRY -->
         <div class="field">
             <label>Country</label>
             <input pInputText [(ngModel)]="user.address.country" />
         </div>
 
-        <!-- SAVE BUTTON -->
-        <button pButton label="Save Profile" class="save-btn w-full mt-3">Save Profile</button>
+        <button pButton label="Save Profile" class="save-btn w-full mt-3" (click)="saveProfile()">Save Profile</button>
 
     </p-card>
 

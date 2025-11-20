@@ -30,10 +30,6 @@ export class OrdersComponent {
     });
   }
 
-  reorder(order: any) {
-    console.log('Reorder:', order.id);
-  }
-
   getProgress(status: string) {
     switch (status) {
       case 'Order Placed': return '20%';

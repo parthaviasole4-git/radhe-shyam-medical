@@ -16,8 +16,7 @@
 
     <!-- STATUS + AMOUNT -->
     <div class="row">
-      <span class="status"
-        [ngClass]="{
+      <span class="status" [ngClass]="{
           'placed': o.status === 'Order Placed',
           'processing': o.status === 'Processing',
           'shipped': o.status === 'Shipped',
@@ -39,9 +38,6 @@
     </div>
 
     <button pButton label="Track Order" icon="pi pi-map-marker" class="track-btn" (click)="track(o)">
-    </button>
-
-    <button pButton label="Reorder" icon="pi pi-refresh" class="reorder-btn mt-2" (click)="reorder(o)">
     </button>
 
   </div>

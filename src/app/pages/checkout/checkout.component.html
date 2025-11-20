@@ -8,9 +8,9 @@
         <p>{{ address.house }}, {{ address.area }}</p>
         <p>{{ address.city }} - {{ address.pincode }}</p>
         <p>Phone: {{ address.phone }}</p>
+        <p>Email: {{ address.email }}</p>
 
-        <button pButton label="Change Address" class="change-btn mt-2" (click)="openAddressDialog()">
-        </button>
+        <button pButton label="Change Address" class="change-btn mt-2" (click)="openAddressDialog()"></button>
     </div>
 
     <!-- NO ADDRESS -->
@@ -36,16 +36,18 @@
 </div>
 
 <!-- ADDRESS FORM DIALOG -->
-<p-dialog [(visible)]="addressPopup" class="mb-3" [modal]="true" [closable]="true" header="Add Delivery Address"
+<p-dialog [(visible)]="addressPopup" class="mb-3" [modal]="true" header="Add Delivery Address"
     [style]="{ width: '90%' }">
 
     <div class="form">
         <input type="text" placeholder="Full Name" [(ngModel)]="form.name">
+        <input type="email" placeholder="Email" [(ngModel)]="form.email">
+        <input type="text" placeholder="Phone Number" [(ngModel)]="form.phone">
+
         <input type="text" placeholder="House No, Street" [(ngModel)]="form.house">
         <input type="text" placeholder="Area / Landmark" [(ngModel)]="form.area">
         <input type="text" placeholder="City" [(ngModel)]="form.city">
         <input type="text" placeholder="Pincode" [(ngModel)]="form.pincode">
-        <input type="text" placeholder="Phone Number" [(ngModel)]="form.phone">
 
         <button pButton label="Save Address" class="save-btn mt-3" (click)="saveAddress()"></button>
     </div>

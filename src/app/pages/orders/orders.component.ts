@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
-import { OrdersService } from '../../core/services/orders.service';
+import { OrderService } from '../../core/services/orders.service';
+import { getUserIdFromToken } from '../../helper/jwt.helper';
 
 @Component({
   selector: 'app-orders',
@@ -11,23 +12,21 @@ import { OrdersService } from '../../core/services/orders.service';
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })
-export class OrdersComponent {
+export class OrdersComponent implements OnInit {
 
   orders: any[] = [];
+  userId = getUserIdFromToken();
 
-  constructor(
-    private ordersService: OrdersService,
-    private router: Router
-  ) {}
+  constructor( private readonly OrderService: OrderService, private readonly router: Router) {}
 
   ngOnInit() {
-    this.orders = this.ordersService.getAllOrders();
+    this.OrderService.getUserOrders(this.userId).subscribe((resonse)=>{
+      this.orders = resonse ;
+    })
   }
 
   track(order: any) {
-    this.router.navigate(['/track', order.id], {
-      state: { order }
-    });
+    this.router.navigate(['/track', order.id], { state: { order }});
   }
 
   getProgress(status: string) {

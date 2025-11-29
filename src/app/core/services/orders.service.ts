@@ -1,91 +1,67 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
-export interface OrderItem {
-  product: any;
-  qty: number;
+export interface OrderItemDto {
+  productId: string;
+  productName: string;
+  quantity: number;
+  price: number;
 }
 
-export interface Order {
+export interface OrderDto {
   id: string;
-  date: string;
-  items: OrderItem[];
-  amount: number;
+  userId: string;
+  items: OrderItemDto[];
   status: string;
+  totalAmount: number;
+  createdAt: string;
+}
+
+export interface ApiMessageResponse {
+  message: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class OrdersService {
+export class OrderService {
 
-  private ordersList: Order[] = [];
-  private ordersSubject = new BehaviorSubject<Order[]>([]);
-  orders$ = this.ordersSubject.asObservable();
+  private readonly base = `${environment.api}/Order`;
 
-  constructor() {
-    this.loadOrders();
+  constructor(private readonly http: HttpClient) { }
+
+  // PLACE ORDER
+  placeOrder(userId: string): Observable<OrderDto> {
+    return this.http.post<OrderDto>(`${this.base}/place`, JSON.stringify(userId),
+      { headers: { 'Content-Type': 'application/json' } }
+    );
   }
 
-  /* Load from localStorage */
-  private loadOrders() {
-    const saved = localStorage.getItem('orders');
-    if (saved) {
-      this.ordersList = JSON.parse(saved);
-      this.ordersSubject.next(this.ordersList);
-    }
+  // GET USER ORDERS
+  getUserOrders(userId: string): Observable<OrderDto[]> {
+    return this.http.get<OrderDto[]>(`${this.base}/user/${userId}`);
   }
 
-  /* Save to localStorage */
-  private saveOrders() {
-    localStorage.setItem('orders', JSON.stringify(this.ordersList));
-    this.ordersSubject.next(this.ordersList);
+  // GET ORDER DETAILS
+  getOrder(orderId: string): Observable<OrderDto> {
+    return this.http.get<OrderDto>(`${this.base}/${orderId}`);
   }
 
-  /* Generate Order ID */
-  private generateOrderId(): string {
-    return 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+  // ADMIN — GET ALL ORDERS
+  getAll(): Observable<OrderDto[]> {
+    return this.http.get<OrderDto[]>(`${this.base}/all`);
   }
 
-  /* Place an Order */
-  placeOrder(items: OrderItem[], amount: number): Order {
-    const newOrder: Order = {
-      id: this.generateOrderId(),
-      date: new Date().toDateString(),
-      items,
-      amount,
-      status: 'Delivered'
-    };
-
-    this.ordersList.unshift(newOrder); // add on top like real apps
-    this.saveOrders();
-
-    return newOrder;
+  // UPDATE STATUS
+  updateStatus(orderId: string, status: string): Observable<ApiMessageResponse> {
+    return this.http.put<ApiMessageResponse>(`${this.base}/${orderId}/status`, status);
   }
 
-  /* Get All Orders */
-  getAllOrders(): Order[] {
-    return [...this.ordersList];
-  }
-
-  /* Get a Single Order */
-  getOrderById(id: string): Order | undefined {
-    return this.ordersList.find(o => o.id === id);
-  }
-
-  /* Update Order Status */
-  updateStatus(id: string, status: string) {
-    const order = this.ordersList.find(o => o.id === id);
-    if (order) {
-      order.status = status;
-      this.saveOrders();
-    }
-  }
-
-  /* Clear All Orders (optional) */
-  clearOrders() {
-    this.ordersList = [];
-    this.saveOrders();
+  // DELETE ORDER
+  delete(orderId: string): Observable<ApiMessageResponse> {
+    return this.http.delete<ApiMessageResponse>(`${this.base}/${orderId}`);
   }
 }
 

@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../../core/services/cart.service';
+import { CartItemDto, CartService } from '../../core/services/cart.service';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
+import { getUserIdFromToken } from '../../helper/jwt.helper';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -12,21 +14,23 @@ import { ProductService } from '../../core/services/product.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
 
+  userId = getUserIdFromToken();
   cart: any[] = [];
-  total = 0;
+  total: number = 0;
   detectedItems: any[] = [];
   file: File | null = null;
 
 
   constructor(
-    private cartService: CartService,
-    private router: Router,
-    private productService: ProductService
+    private readonly cartService: CartService,
+    private readonly router: Router,
+    private readonly productService: ProductService
   ) { }
 
   ngOnInit() {
+    this.cartService.getCart(this.userId).subscribe();
     this.cartService.cart$.subscribe(res => {
       this.cart = res;
       this.calculateTotal();
@@ -34,22 +38,26 @@ export class CartComponent {
   }
 
   calculateTotal() {
-    this.total = this.cart.reduce((sum, x) => sum + x.qty * x.product.price, 0);
+    this.total = this.cart.reduce((s, x) => s + x.qty * (x.price ?? 0), 0);
   }
 
-  increase(id: number) {
-    this.cartService.increaseQty(id);
-    this.cartService.updateCartCount();
+  increase(item: any) {
+    this.cartService.updateQty(item.id, item.qty + 1, this.userId).subscribe();
   }
 
-  decrease(id: number) {
-    this.cartService.decreaseQty(id);
-    this.cartService.updateCartCount();
+  decrease(item: any) {
+    const newQty = item.qty > 1 ? item.qty - 1 : 0;
+
+    if (newQty === 0) {
+      this.cartService.remove(item.id, this.userId).subscribe();
+      return;
+    }
+
+    this.cartService.updateQty(item.id, newQty, this.userId).subscribe();
   }
 
-  remove(id: number) {
-    this.cartService.removeFromCart(id);
-    this.cartService.updateCartCount();
+  remove(item: CartItemDto) {
+    this.cartService.remove(item.id, this.userId).subscribe();
   }
 
   onFileSelected(event: any) {
@@ -59,20 +67,21 @@ export class CartComponent {
     if (!allowed.includes(this.file.type)) {
       return;
     }
-    this.detectedItems = [{ name: 'Paracetamol 650mg', id: 1 }];
+    this.detectedItems = [{ name: 'Paracetamol 650mg', id: '00000000-0000-0000-0000-000000000001' }];
   }
 
   addDetectedToCart() {
     if (!this.detectedItems.length) return;
 
-    this.detectedItems.forEach(item => {
-      const product = this.productService.getById(item.id);
-      if (!product) return;
-      this.cartService.addToCart(product);
-    });
+    const requests = this.detectedItems.map(item =>
+      this.cartService.addToCart({ userId: this.userId, productId: item.id, qty: 1, price: 40  })
+    );
 
-    this.cartService.updateCartCount();
-    this.detectedItems = [];
+    // Execute all add-to-cart API calls
+    forkJoin(requests).subscribe(() => {
+      this.cartService.getCart(this.userId).subscribe();
+      this.detectedItems = [];
+    });
   }
 
   goToCheckout() {

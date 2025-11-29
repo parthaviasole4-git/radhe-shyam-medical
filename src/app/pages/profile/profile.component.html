@@ -1,6 +1,5 @@
 <div class="profile-container">
 
-    <!-- HEADER -->
     <p-card class="profile-card">
         <div class="avatar-section">
             <div class="avatar-circle">
@@ -10,60 +9,96 @@
         </div>
     </p-card>
 
-    <!-- FORM -->
     <p-card class="form-card">
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
 
-        <!-- NAME -->
-        <div class="field">
-            <label>Name</label>
-            <input pInputText [(ngModel)]="user.name" placeholder="Full Name" />
-        </div>
+            <!-- NAME -->
+            <div class="field">
+                <label>Name <span class="required">*</span></label>
+                <input pInputText formControlName="displayName" placeholder="Full Name" />
+                <small class="error" *ngIf="f['displayName'].touched && f['displayName'].invalid">
+                    Name is required
+                </small>
+            </div>
 
-        <!-- EMAIL -->
-        <div class="field">
-            <label>Email</label>
-            <input pInputText type="email" [(ngModel)]="user.email" placeholder="you@example.com" />
-        </div>
+            <!-- PHONE -->
+            <div class="field">
+                <label>Phone <span class="required">*</span></label>
+                <input pInputText formControlName="phone" maxlength="10" placeholder="9876543210" />
+                <small class="error" *ngIf="f['phone'].touched && f['phone'].invalid">
+                    Phone is required & must be 10 digits
+                </small>
+            </div>
 
-        <!-- PHONE -->
-        <div class="field">
-            <label>Phone Number</label>
-            <input pInputText maxlength="10" [(ngModel)]="user.phone" placeholder="9876543210" />
-        </div>
+            <div class="field">
+                <label>Email <span class="required">*</span></label>
+                <input pInputText formControlName="email" [readOnly]="true" placeholder="Email" />
+                <small class="error" *ngIf="f['email'].touched && f['email'].invalid">
+                    email is required
+                </small>
+            </div>
 
-        <h3 class="address-title mt-3 mb-2">Delivery Address</h3>
+            <h3 class="address-title mt-3 mb-2">Delivery Address</h3>
 
-        <div class="field">
-            <label>House / Building</label>
-            <input pInputText [(ngModel)]="user.address.house" placeholder="House No, Building" />
-        </div>
+            <!-- NESTED ADDRESS FORM -->
+            <div formGroupName="address">
 
-        <div class="field">
-            <label>Area / Landmark</label>
-            <input pInputText [(ngModel)]="user.address.area" placeholder="Street / Landmark" />
-        </div>
+                <!-- HOUSE -->
+                <div class="field">
+                    <label>House <span class="required">*</span></label>
+                    <input pInputText formControlName="house" placeholder="House No / Building" />
+                    <small class="error" *ngIf="addr['house'].touched && addr['house'].invalid">
+                        House is required
+                    </small>
+                </div>
 
-        <div class="field">
-            <label>City</label>
-            <input pInputText [(ngModel)]="user.address.city" placeholder="Your City" />
-        </div>
+                <!-- AREA -->
+                <div class="field">
+                    <label>Area <span class="required">*</span></label>
+                    <input pInputText formControlName="area" placeholder="Area / Landmark" />
+                    <small class="error" *ngIf="addr['area'].touched && addr['area'].invalid">
+                        Area is required
+                    </small>
+                </div>
 
-        <div class="field">
-            <label>Pincode</label>
-            <input pInputText maxlength="6" [(ngModel)]="user.address.zip" placeholder="6 digit pincode" />
-        </div>
+                <!-- CITY -->
+                <div class="field">
+                    <label>City <span class="required">*</span></label>
+                    <input pInputText formControlName="city" placeholder="City" />
+                    <small class="error" *ngIf="addr['city'].touched && addr['city'].invalid">
+                        City is required
+                    </small>
+                </div>
 
-        <div class="field">
-            <label>State</label>
-            <input pInputText [(ngModel)]="user.address.state" placeholder="Your State" />
-        </div>
+                <!-- PINCODE -->
+                <div class="field">
+                    <label>Pincode <span class="required">*</span></label>
+                    <input pInputText formControlName="pincode" maxlength="6" placeholder="6 digit pincode" />
+                    <small class="error" *ngIf="addr['pincode'].touched && addr['pincode'].invalid">
+                        Pincode is required (6 digits)
+                    </small>
+                </div>
 
-        <div class="field">
-            <label>Country</label>
-            <input pInputText [(ngModel)]="user.address.country" />
-        </div>
+                <!-- STATE -->
+                <div class="field">
+                    <label>State <span class="required">*</span></label>
+                    <input pInputText formControlName="state" placeholder="Your State" />
+                    <small class="error" *ngIf="addr['state'].touched && addr['state'].invalid">
+                        State is required
+                    </small>
+                </div>
 
-        <button pButton label="Save Profile" class="save-btn w-full mt-3" (click)="saveProfile()">Save Profile</button>
+            </div>
+
+            <button pButton label="Save Profile" class="save-btn w-full mt-3" type="submit">
+                {{'Save Profile'}}
+            </button>
+
+            <button pButton label="Logout" icon="pi pi-sign-out" class="logout-btn w-full mt-3 p-button-danger" type="button"
+                (click)="logout()">{{'Logout'}}
+            </button>
+
+        </form>
 
     </p-card>
 

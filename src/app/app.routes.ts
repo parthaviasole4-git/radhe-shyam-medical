@@ -18,8 +18,12 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { OrderTrackingComponent } from './pages/orders/order-tracking/order-tracking.component';
 
+
 /* OPTIONAL GUARDS */
-// import { authGuard } from './core/guards/auth-guard';
+import { authGuard } from './core/guard/auth.guard';
+import { OtpComponent } from './pages/auth/login/otp/otp.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { AdminOrdersComponent } from './pages/admin-orders/admin-orders.component';
 // import { guestGuard } from './core/guards/guest-guard';
 
 export const routes: Routes = [
@@ -28,6 +32,11 @@ export const routes: Routes = [
   { 
     path: 'login', 
     component: LoginComponent,
+    // canActivate: [guestGuard]
+  },
+   { 
+    path: 'otp', 
+    component: OtpComponent,
     // canActivate: [guestGuard]
   },
 
@@ -47,7 +56,7 @@ export const routes: Routes = [
       { 
         path: 'checkout', 
         component: CheckoutComponent,
-        // canActivate: [authGuard]
+        canActivate: [authGuard]
       },
       {
         path: 'payment',
@@ -57,14 +66,14 @@ export const routes: Routes = [
       {
         path: 'payment-success',
         component: PaymentSuccessComponent,
-        // canActivate: [authGuard]
+        canActivate: [authGuard]
       },
 
       /* ORDERS + PROFILE */
       {
         path: 'orders',
         component: OrdersComponent,
-        // canActivate: [authGuard]
+        canActivate: [authGuard]
       },
       {
         path: 'track/:id',
@@ -73,8 +82,20 @@ export const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
-        // canActivate: [authGuard]
-      }
+        canActivate: [authGuard]
+      },
+
+      /* ORDERS + PROFILE */
+      {
+        path: 'admin/dashboard',
+        component: AdminDashboardComponent,
+        canActivate: [authGuard]
+      },
+      {
+        path: 'admin/orders',
+        component: AdminOrdersComponent,
+        canActivate: [authGuard]
+      },
     ]
   },
 

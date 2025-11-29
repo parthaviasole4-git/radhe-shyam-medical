@@ -6,10 +6,7 @@
 
   <!-- COD (only working option) -->
   <div class="option" (click)="paymentMethod = 'cod'">
-    <p-radioButton 
-      name="payment" 
-      value="cod"
-      [(ngModel)]="paymentMethod">
+    <p-radioButton name="payment" value="cod" [(ngModel)]="paymentMethod">
     </p-radioButton>
     <div class="info">
       <h4>Cash On Delivery</h4>
@@ -19,11 +16,7 @@
 
   <!-- Disabled options -->
   <div class="option disabled">
-    <p-radioButton 
-      name="payment"
-      value="upi"
-      [(ngModel)]="paymentMethod"
-      disabled="true">
+    <p-radioButton name="payment" value="upi" [(ngModel)]="paymentMethod" disabled="true">
     </p-radioButton>
     <div class="info blur">
       <h4>UPI (Coming Soon)</h4>
@@ -32,11 +25,7 @@
   </div>
 
   <div class="option disabled">
-    <p-radioButton 
-      name="payment"
-      value="card"
-      [(ngModel)]="paymentMethod"
-      disabled="true">
+    <p-radioButton name="payment" value="card" [(ngModel)]="paymentMethod" disabled="true">
     </p-radioButton>
     <div class="info blur">
       <h4>Card (Coming Soon)</h4>
@@ -49,14 +38,8 @@
 <!-- Bottom Bar -->
 <div class="bottom-bar">
   <div class="row">
-    <span>Total</span>
-    <strong>₹{{ total }}</strong>
+    <span>Total</span><strong>₹{{ total }}</strong>
   </div>
 
-  <button 
-    pButton 
-    label="Place Order (COD)"
-    class="pay-now"
-    (click)="payNow()">
-  </button>
+  <button pButton label="Place Order (COD)" class="pay-now" (click)="payNow()"></button>
 </div>

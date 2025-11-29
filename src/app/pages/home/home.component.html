@@ -1,9 +1,9 @@
 <!-- HERO CAROUSEL WITH GRADIENT OVERLAY -->
 <div class="carousel-wrapper mb-4">
-    <p-carousel [value]="slides" circular [autoplayInterval]="3500">
+    <p-carousel [value]="slides" [circular]="false" [autoplayInterval]="3500">
         <ng-template pTemplate="item" let-s>
             <div class="carousel-box">
-                <img [src]="s.img" class="carousel-img" />
+                <img [src]="s.img" alt="carousel-img" class="carousel-img" />
                 <div class="overlay"></div>
                 <div class="carousel-text">
                     <h2>Save up to <span class="text-green-400">72%</span> on Medicines</h2>
@@ -43,7 +43,7 @@
 
       <!-- PRODUCT IMAGE -->
       <div class="img-wrapper">
-        <img [src]="x.img" class="med-img" />
+        <img [src]="x.imageUrl" class="med-img" />
       </div>
 
       <!-- PRODUCT NAME -->

@@ -6,9 +6,9 @@ import { LoaderService } from '../services/loader.service';
 export const loaderInterceptor: HttpInterceptorFn = (req, next) => {
   const loader = inject(LoaderService);
 
-  loader.show(); // show loader before API call
+  loader.show();
 
   return next(req).pipe(
-    finalize(() => loader.hide()) // hide after API finishes
+    finalize(() => loader.hide())
   );
 };

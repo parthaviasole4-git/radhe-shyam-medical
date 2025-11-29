@@ -1,40 +1,31 @@
 <p-toast></p-toast>
-
-<h2 class="page-title">All Medicines</h2>
-
 <div class="grid">
 
-  <div 
-    class="col-12 sm:col-6 md:col-4 lg:col-3"
-    *ngFor="let p of products">
+  <div class="col-12 sm:col-6 md:col-4 lg:col-3" *ngFor="let product of products">
 
-    <div class="product-card" (click)="viewDetails(p.id)">
+    <div class="product-card" (click)="viewDetails(product?.id)">
 
       <!-- Discount Badge -->
       <div class="discount">
-        -{{ (((p.mrp - p.price) / p.mrp) * 100).toFixed(0) }}%
+        -{{ (((product?.mrp - product?.price) / product?.mrp) * 100).toFixed(0) }}%
       </div>
 
       <!-- Image -->
       <div class="img-box">
-        <img [src]="p.img" class="prod-img" />
+        <img [src]="product?.imageUrl" class="prod-img" alt="prod-img" />
       </div>
 
       <!-- Name -->
-      <h4 class="name">{{ p.name }}</h4>
+      <h4 class="name">{{ product?.name }}</h4>
 
       <!-- Price Row -->
       <div class="price-row">
-        <span class="price">₹{{ p.price }}</span>
-        <span class="mrp">₹{{ p.mrp }}</span>
+        <span class="price">₹{{ product?.price }}</span>
+        <span class="mrp">₹{{ product?.mrp }}</span>
       </div>
 
       <!-- Add Button -->
-      <button 
-        pButton 
-        icon="pi pi-plus" 
-        class="add-btn" 
-        (click)="addToCart(p, $event)">
+      <button pButton icon="pi pi-shopping-cart" class="add-btn" (click)="addToCart(product, $event)">
       </button>
 
     </div>

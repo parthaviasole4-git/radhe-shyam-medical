@@ -7,7 +7,7 @@
 
   <div class="summary-card shadow-2">
     <h3>Order #{{ order?.id }}</h3>
-    <p>{{ order?.items?.length }} items • ₹{{ order?.amount }}</p>
+    <p>{{ order?.items?.length }} items • ₹{{ order?.totalAmount }}</p>
 
     <span class="status-badge"
       [ngClass]="{

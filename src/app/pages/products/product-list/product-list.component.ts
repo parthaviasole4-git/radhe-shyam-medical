@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
@@ -7,6 +7,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { getUserIdFromToken } from '../../../helper/jwt.helper';
 
 @Component({
   selector: 'app-product-list',
@@ -21,19 +22,19 @@ import { CardModule } from 'primeng/card';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
-export class ProductListComponent {
+export class ProductListComponent implements OnInit {
 
   products: any[] = [];
+  userId = getUserIdFromToken();
 
   constructor(
-    private productService: ProductService,
-    private cartService: CartService,
-    private router: Router,
-    private msg: MessageService
+    private readonly productService: ProductService,
+    private readonly cartService: CartService,
+    private readonly router: Router,
+    private readonly msg: MessageService
   ) {}
 
   ngOnInit() {
-    // Load products from service
     this.productService.getAll().subscribe(res => {
       this.products = res;
     });
@@ -44,24 +45,15 @@ export class ProductListComponent {
   }
 
   addToCart(product: any, event: Event) {
-    event.stopPropagation(); // stop card click
+    event.stopPropagation();
 
-    this.cartService.addToCart(product);
-
-    // Toast popup
-    this.msg.add({
-      severity: 'success',
-      summary: 'Added to Cart',
-      detail: product.name,
-      life: 1300
+    this.cartService.addToCart({ userId: this.userId, productId: product.id, qty: 1, price: product.price }).subscribe(() => {
+      this.msg.add({ severity: 'success', summary: 'Added to Cart', detail: product.name, life: 1300 });
     });
 
-    // button pulse animation
-    const target = event.target as HTMLElement;
-    target.classList.add('pulse');
-    setTimeout(() => target.classList.remove('pulse'), 250);
-
-    this.cartService.updateCartCount();
+    const btn = event.target as HTMLElement;
+    btn.classList.add('pulse');
+    setTimeout(() => btn.classList.remove('pulse'), 250);
   }
 }
 

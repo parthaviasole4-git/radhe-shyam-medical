@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -13,7 +13,7 @@ import { ProductService } from '../../core/services/product.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   
   slides = [
     { img: 'https://cdn.pixabay.com/photo/2016/12/05/19/49/syringe-1884784_1280.jpg' },
@@ -36,7 +36,7 @@ export class HomeComponent {
   ) {}
 
   ngOnInit() {
-    this.productService.getAll().subscribe(res => {
+    this.productService.getAll().subscribe((res: any) => {
       this.products = res;
     });
   }

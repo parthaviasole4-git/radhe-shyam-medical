@@ -40,6 +40,10 @@
   border-radius: 18px;
 }
 
+.field {
+  margin-bottom: 1rem;
+}
+
 .field label {
   font-weight: 600;
   margin-bottom: 0.4rem;
@@ -47,8 +51,16 @@
   color: #444;
 }
 
-input[pInputText],
-textarea {
+.required {
+  color: red;
+}
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+}
+
+input[pInputText] {
   width: 100%;
   padding: 0.85rem !important;
   border-radius: 12px !important;
@@ -73,3 +85,16 @@ textarea {
 .save-btn:hover {
   background: #1e3a8a !important;
 }
+
+.logout-btn {
+  background: #ff4d4d !important;
+  padding: 1rem !important;
+  border-radius: 14px !important;
+  font-size: 1.05rem;
+  color: rgb(239, 231, 231);
+}
+
+.logout-btn:hover {
+  background: #e04343 !important;
+}
+

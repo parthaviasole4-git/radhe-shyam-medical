@@ -1,46 +1,91 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { InputText } from 'primeng/inputtext';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Card } from 'primeng/card';
+import { InputText } from 'primeng/inputtext';
+import { UserService } from '../../core/services/user.service';
+import { getUserIdFromToken } from '../../helper/jwt.helper';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    InputText,
-    Card
-  ],
+  imports: [CommonModule, ReactiveFormsModule, Card, InputText],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss',
+  styleUrl: './profile.component.scss'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
 
-  user = {
-    name: '',
-    email: '',
-    phone: '',
-    address: {
-      house: '',
-      area: '',
-      city: '',
-      zip: '',
-      state: '',
-      country: 'India'
-    }
-  };
+  profileForm!: FormGroup;
+  loading = false;
+  userId = getUserIdFromToken();
 
-  constructor() {
-    const saved = localStorage.getItem('profile');
-    if (saved) {
-      this.user = JSON.parse(saved);
-    }
+  constructor(private readonly fb: FormBuilder, private readonly userService: UserService, private readonly authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.buildForm();
+    this.loadUser();
+  }
+
+  buildForm() {
+    this.profileForm = this.fb.group({
+      displayName: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.maxLength(10)]],
+      email: ['', [Validators.required]],
+      address: this.fb.group({
+        house: ['', Validators.required],
+        area: ['', Validators.required],
+        city: ['', Validators.required],
+        pincode: ['', [Validators.required, Validators.maxLength(6)]],
+        state: ['', Validators.required],
+      })
+    });
+  }
+
+  loadUser() {
+    this.userService.getById(this.userId).subscribe(res => {
+      if (!res) return;
+
+      this.profileForm.patchValue({
+        displayName: res?.displayName,
+        phone: res?.phone,
+        email: res?.identifier,
+        address: {
+          house: res.address?.house || '',
+          area: res.address?.area || '',
+          city: res.address?.city || '',
+          pincode: res.address?.pincode || '',
+          state: res.address?.state || ''
+        }
+      });
+    });
   }
 
   saveProfile() {
-    localStorage.setItem('profile', JSON.stringify(this.user));
-    console.log('Profile Saved:', this.user);
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+    this.loading = true;
+    this.userService.completeProfile(this.userId, this.profileForm.value).subscribe({
+      next: () => {
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  get f() {
+    return this.profileForm.controls;
+  }
+  
+  get addr() {
+    return (this.profileForm.get('address') as FormGroup).controls;
   }
 }

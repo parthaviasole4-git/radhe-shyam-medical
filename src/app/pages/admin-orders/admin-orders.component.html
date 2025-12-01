@@ -1,48 +1,18 @@
-<p-card header="Orders List" class="card">
-
+<p-card class="card">
   <p-table [value]="orders" [paginator]="true" [rows]="10" class="table">
-
     <ng-template pTemplate="header">
       <tr>
         <th>Order ID</th>
-        <th>User</th>
         <th>Status</th>
-        <th style="width:140px;">Actions</th>
       </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-order>
       <tr>
-
         <td>
           <a class="link" [routerLink]="['/admin/orders', order.id]">{{ order.id }}</a>
         </td>
-
-        <td>
-          <a class="link" [routerLink]="['/admin/orders', order.id]">{{ order.userName }}</a>
-        </td>
-
         <td><p-tag [value]="order.status"></p-tag></td>
-
-        <td class="actions">
-
-          <button pButton label="Out for Delivery"
-                  *ngIf="order.status === 'Order Placed'"
-                  class="p-button-info small-btn"
-                  [routerLink]="['/admin/orders', order.id, 'out-for-delivery']">
-          </button>
-
-          <button pButton label="Verify OTP"
-                  *ngIf="order.status === 'Out for Delivery'"
-                  class="p-button-success small-btn"
-                  [routerLink]="['/admin/orders', order.id, 'verify-otp']">
-          </button>
-
-        </td>
-
       </tr>
     </ng-template>
-
   </p-table>
-
 </p-card>

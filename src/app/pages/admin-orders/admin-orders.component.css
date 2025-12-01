@@ -11,8 +11,3 @@
 .table a.link:hover {
   text-decoration: underline;
 }
-
-.small-btn {
-  padding: 4px 8px;
-  font-size: 13px;
-}

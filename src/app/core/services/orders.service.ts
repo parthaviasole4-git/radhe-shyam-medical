@@ -23,6 +23,11 @@ export interface ApiMessageResponse {
   message: string;
 }
 
+export interface VerifyOrderOtp {
+  orderId: string;
+  otp: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -54,9 +59,19 @@ export class OrderService {
     return this.http.get<OrderDto[]>(`${this.base}/all`);
   }
 
-  // UPDATE STATUS
-  updateStatus(orderId: string, status: string): Observable<ApiMessageResponse> {
-    return this.http.put<ApiMessageResponse>(`${this.base}/${orderId}/status`, status);
+  //MARK OUT OF DELIEVERY
+  markOutOfDelievery(orderId: string): Observable<ApiMessageResponse> {
+    return this.http.put<ApiMessageResponse>(`${this.base}/${orderId}/status`, {});
+  }
+
+  //RESEND OTP
+  resendVerifyOtp(orderId: string): Observable<ApiMessageResponse> {
+    return this.http.post<ApiMessageResponse>(`${this.base}/resend-otp/${orderId}`, {});
+  }
+
+  // VERIFY ORDER OTP
+  verifyOtp(request: VerifyOrderOtp): Observable<ApiMessageResponse> {
+    return this.http.post<ApiMessageResponse>(`${this.base}/verify-delivery-otp`, request);
   }
 
   // DELETE ORDER

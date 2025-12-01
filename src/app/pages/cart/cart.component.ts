@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { getUserIdFromToken } from '../../helper/jwt.helper';
 import { forkJoin } from 'rxjs';
+import { OcrService } from '../../core/services/ocr.service';
 
 @Component({
   selector: 'app-cart',
@@ -15,23 +16,22 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-
   userId = getUserIdFromToken();
   cart: any[] = [];
   total: number = 0;
   detectedItems: any[] = [];
   file: File | null = null;
 
-
   constructor(
     private readonly cartService: CartService,
     private readonly router: Router,
-    private readonly productService: ProductService
-  ) { }
+    private readonly productService: ProductService,
+    private ocrService: OcrService
+  ) {}
 
   ngOnInit() {
     this.cartService.getCart(this.userId).subscribe();
-    this.cartService.cart$.subscribe(res => {
+    this.cartService.cart$.subscribe((res) => {
       this.cart = res;
       this.calculateTotal();
     });
@@ -67,20 +67,41 @@ export class CartComponent implements OnInit {
     if (!allowed.includes(this.file.type)) {
       return;
     }
-    this.detectedItems = [{ name: 'Paracetamol 650mg', id: '00000000-0000-0000-0000-000000000001' }];
+
+    this.ocrService.uploadPrescription(this.file).subscribe({
+      next: (res) => (this.detectedItems = res),
+      error: (err) => console.error(err),
+    });
   }
 
   addDetectedToCart() {
     if (!this.detectedItems.length) return;
 
-    const requests = this.detectedItems.map(item =>
-      this.cartService.addToCart({ userId: this.userId, productId: item.id, qty: 1, price: 40  })
+    // Step 1: For each detected OCR item, get product by ID
+    const productRequests = this.detectedItems.map(
+      (item) => this.productService.getById(item.id) // <-- Call API here
     );
 
-    // Execute all add-to-cart API calls
-    forkJoin(requests).subscribe(() => {
-      this.cartService.getCart(this.userId).subscribe();
-      this.detectedItems = [];
+    // Step 2: Run ALL product fetches in parallel
+    forkJoin(productRequests).subscribe({
+      next: (products) => {
+        // Step 3: Now add each fetched product to cart
+        const addToCartRequests = products.map((prod) =>
+          this.cartService.addToCart({
+            userId: this.userId,
+            productId: prod.id,
+            qty: 1,
+            price: prod.price, // <-- REAL PRICE from DB
+          })
+        );
+
+        // Step 4: Execute all add-to-cart API calls
+        forkJoin(addToCartRequests).subscribe(() => {
+          this.cartService.getCart(this.userId).subscribe();
+          this.detectedItems = [];
+        });
+      },
+      error: (err) => console.error(err),
     });
   }
 

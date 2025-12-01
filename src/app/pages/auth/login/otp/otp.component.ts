@@ -71,6 +71,7 @@ export class OtpComponent {
 
     this.authService.sendOtp(sendOtpRequest).subscribe({
       next: (response) => {
+        this.otp = '';
         this.loading = false;
         this.messageService.add({ severity: 'success', summary: 'Success', detail: response.message, life: 800 });
       },

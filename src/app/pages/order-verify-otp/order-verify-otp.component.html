@@ -2,18 +2,14 @@
 
     <button pButton label="Back" class="p-button-success" routerLink="/admin/orders"></button>
 
-    <p>Order ID: <strong>{{ orderId }}</strong></p>
-
     <form [formGroup]="form">
 
         <div class="otp-box flex justify-content-center">
             <p-inputotp formControlName="otp" [length]="6" inputmode="numeric" size="large"></p-inputotp>
         </div>
 
-        <p-messages [(value)]="msgs"></p-messages>
-
         <div class="flex justify-content-center mt-3">
-            <button pButton label="Verify" class="p-button-success" (click)="submit()"></button>
+            <button pButton label="Verify" [disabled]="this.form.controls.otp.value?.length != 6" class="p-button-success" (click)="submit()"></button>
         </div>
 
         <!-- RESEND OTP SECTION -->

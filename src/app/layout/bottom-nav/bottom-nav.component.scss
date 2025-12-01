@@ -18,6 +18,7 @@
   color: #666;
   font-size: 0.8rem;
   transition: 0.2s ease;
+  -webkit-tap-highlight-color: transparent; /* FIX */
 }
 
 .nav-item i {

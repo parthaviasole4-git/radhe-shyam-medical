@@ -35,7 +35,7 @@ export class OrderVerifyOtpComponent {
   intervalRef: any;
 
   form = new FormGroup({
-    otp: new FormControl(null, Validators.required)
+    otp: new FormControl('', Validators.required)
   })
 
   constructor(
@@ -63,6 +63,7 @@ export class OrderVerifyOtpComponent {
   resendOtp() {
     this.orderService.resendVerifyOtp(this.orderId).subscribe({
       next: (res: any) => {
+        this.form.controls.otp.reset();
         this.msgs = [{ severity: 'info', summary: 'OTP Sent', detail: 'OTP has been sent.' }];
         this.startTimer();
       },

@@ -17,7 +17,7 @@ export class AdminOrdersComponent implements OnInit {
 
   orders: any[] = [];
 
-  constructor(private readonly service: OrderService) {}
+  constructor(private readonly service: OrderService) { }
 
   ngOnInit() {
     this.load();

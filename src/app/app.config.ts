@@ -5,6 +5,8 @@ import { routes } from './app.routes';
 import { loaderInterceptor } from './core/interceptors/loader.interceptor';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,7 +14,11 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes),
     provideAnimations(),
-    provideHttpClient(withInterceptors([loaderInterceptor]),
-    )
+    provideHttpClient(withInterceptors([loaderInterceptor])),
+    providePrimeNG({
+      theme: {
+        preset: Aura
+      }
+    })
   ]
 };

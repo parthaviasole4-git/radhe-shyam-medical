@@ -47,9 +47,13 @@ export class OtpComponent {
     }
 
     this.authService.verifyOtp(verifyOtpRequest).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         if (response?.token) {
           localStorage.setItem("token", response?.token);
+          if(response.isAdmin){
+            this.router.navigate(['/admin/dashboard']);
+            return
+          }
           this.router.navigate(['/']);
         }
       },

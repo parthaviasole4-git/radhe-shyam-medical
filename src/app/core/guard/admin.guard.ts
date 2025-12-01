@@ -4,7 +4,9 @@ import { getIsAdminFromToken } from '../../helper/jwt.helper';
 export const adminGuard: CanActivateFn = () => {
   const router = new Router();
 
-  if (getIsAdminFromToken()) {
+  let isAdmin = getIsAdminFromToken();
+
+  if (isAdmin === 'True') {
     return true;
   }
 

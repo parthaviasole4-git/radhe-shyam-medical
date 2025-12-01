@@ -24,6 +24,11 @@ import { authGuard } from './core/guard/auth.guard';
 import { OtpComponent } from './pages/auth/login/otp/otp.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { AdminOrdersComponent } from './pages/admin-orders/admin-orders.component';
+import { AdminOrdersDetailsComponent } from './pages/admin-orders-details/admin-orders-details.component';
+import { OrderVerifyOtpComponent } from './pages/order-verify-otp/order-verify-otp.component';
+import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
+import { AdminUsersDetailsComponent } from './pages/admin-users-details/admin-users-details.component';
+import { adminGuard } from './core/guard/admin.guard';
 // import { guestGuard } from './core/guards/guest-guard';
 
 export const routes: Routes = [
@@ -89,12 +94,32 @@ export const routes: Routes = [
       {
         path: 'admin/dashboard',
         component: AdminDashboardComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard, adminGuard]
       },
       {
         path: 'admin/orders',
         component: AdminOrdersComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard, adminGuard]
+      },
+      {
+        path: 'admin/orders/:id',
+        component: AdminOrdersDetailsComponent,
+        canActivate: [authGuard, adminGuard]
+      },
+      {
+        path: 'admin/verify-otp/:id',
+        component: OrderVerifyOtpComponent,
+        canActivate: [authGuard, adminGuard]
+      },
+      {
+        path: 'admin/users',
+        component: AdminUsersComponent,
+        canActivate: [authGuard, adminGuard]
+      },
+      {
+        path: 'admin/users/:id',
+        component: AdminUsersDetailsComponent,
+        canActivate: [authGuard, adminGuard]
       },
     ]
   },

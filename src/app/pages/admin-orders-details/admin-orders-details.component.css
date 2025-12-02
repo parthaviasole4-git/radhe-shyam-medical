@@ -16,3 +16,15 @@
 .mt-3 {
   margin-top: 18px;
 }
+
+.address-card {
+  background: #fff;
+  border-radius: 16px;
+  margin-bottom: 20px;
+
+  p {
+    margin: 2px 0;
+    color: #555;
+    font-size: .95rem;
+  }
+}

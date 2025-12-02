@@ -30,8 +30,8 @@ export class ProfileComponent implements OnInit {
   buildForm() {
     this.profileForm = this.fb.group({
       displayName: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.maxLength(10)]],
-      email: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      email: [''],
       address: this.fb.group({
         house: ['', Validators.required],
         area: ['', Validators.required],
@@ -48,8 +48,7 @@ export class ProfileComponent implements OnInit {
 
       this.profileForm.patchValue({
         displayName: res?.displayName,
-        phone: res?.phone,
-        email: res?.identifier,
+        phone: res?.identifier,
         address: {
           house: res.address?.house || '',
           area: res.address?.area || '',

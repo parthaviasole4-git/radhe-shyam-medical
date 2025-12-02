@@ -33,16 +33,14 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Order ID</th>
-          <th>User</th>
           <th>Status</th>
         </tr>
       </ng-template>
 
       <ng-template pTemplate="body" let-order>
         <tr>
-          <td>{{ order.id }}</td>
-          <td>{{ order.userName }}</td>
-          <td>{{ order.status }}</td>
+          <td>{{ order?.id }}</td>
+          <td>{{ order?.status }}</td>
         </tr>
       </ng-template>
     </p-table>

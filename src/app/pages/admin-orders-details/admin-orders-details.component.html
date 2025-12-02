@@ -6,9 +6,9 @@
         <span class="label">Order ID:</span> <span>{{ order?.id }}</span>
     </div>
 
-    <!-- <div class="detail-row">
-        <span class="label">User:</span> <span>{{ order?.userName }}</span>
-    </div> -->
+    <div class="detail-row">
+        <span class="label">User:</span> <span>{{ order?.user?.displayName }}</span>
+    </div>
 
     <div class="detail-row">
         <span class="label">Status:</span>
@@ -19,13 +19,21 @@
         <span class="label">Total Amount:</span> <span>{{ order?.totalAmount }}</span>
     </div>
 
-    <h3 class="mt-3">Items</h3>
+    <h3 class="mt-3 mb-2">Items</h3>
 
     <ul>
         <li *ngFor="let item of order?.items">
             {{ item?.product?.name }} — {{ item.qty }}
         </li>
     </ul>
+
+    <h3 class="mt-3 mb-2">Address</h3>
+
+    <div *ngIf="order?.user?.address" class="address-card">
+        <p>{{ order?.user?.address?.house }}, {{ order?.user?.address?.area }}</p>
+        <p>{{ order?.user?.address?.city }} - {{ order?.user?.address?.pincode }}</p>
+        <p>Phone: {{ order?.user?.identifier }}</p>
+    </div>
 
     <div class="flex justify-content-center">
         <button *ngIf="order?.status === 'Order Placed'" pButton label="Mark Out of Dilivery" (click)="markOutofDilivery()" class="mt-2"></button>

@@ -50,7 +50,7 @@ export class OtpComponent {
       next: (response: any) => {
         if (response?.token) {
           localStorage.setItem("token", response?.token);
-          if(response.isAdmin){
+          if(response?.user?.isAdmin){
             this.router.navigate(['/admin/dashboard']);
             return
           }

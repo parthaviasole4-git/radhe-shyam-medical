@@ -5,7 +5,10 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { AuthService, SendOtpRequest } from '../../../core/services/auth.service';
+import {
+  AuthService,
+  SendOtpRequest,
+} from '../../../core/services/auth.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { CommonModule } from '@angular/common';
@@ -21,35 +24,67 @@ import { CommonModule } from '@angular/common';
     InputTextModule,
     InputGroupModule,
     InputGroupAddonModule,
-    ToastModule
+    ToastModule,
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  
   private readonly router = inject(Router);
-  private readonly authService = inject(AuthService)
-  private readonly messageService = inject(MessageService)
-  
+  private readonly authService = inject(AuthService);
+  private readonly messageService = inject(MessageService);
+
   identifier: string = '';
 
   sendOtp() {
     if (!this.identifier.trim()) return;
 
+    let value = this.identifier.trim();
+
+    // If only 10 digits → assume Indian mobile → convert automatically
+    const phoneRegex = /^[0-9]{10}$/;
+
+    if (phoneRegex.test(value)) {
+      value = '+91' + value;
+    }
+
     const sendOtpRequest: SendOtpRequest = {
-      identifier: this.identifier
+      identifier: value,
     };
 
     this.authService.sendOtp(sendOtpRequest).subscribe({
-      next: (response) => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP Sent Su', life: 800 });
-        this.router.navigate(['/otp'], { queryParams: { value: this.identifier }});
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'OTP Sent Successfully',
+          life: 800,
+        });
+        this.router.navigate(['/otp'], { queryParams: { value } });
       },
       error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error?.message || 'Something went wrong', life: 1500 });
-      }
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error?.message || 'Something went wrong',
+          life: 1500,
+        });
+      },
     });
   }
 
+  // Block non-digit keys while typing
+  allowOnlyDigits(event: KeyboardEvent) {
+    const char = event.key;
+
+    // Allow only digits
+    if (!/^[0-9]$/.test(char)) {
+      event.preventDefault();
+    }
+  }
+
+  // Remove any pasted non-digit characters
+  filterDigits() {
+    this.identifier = this.identifier.replace(/\D/g, '');
+  }
 }

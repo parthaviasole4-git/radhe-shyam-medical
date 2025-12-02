@@ -75,6 +75,7 @@ export class CartComponent implements OnInit {
   }
 
   addDetectedToCart() {
+
     if (!this.detectedItems.length) return;
 
     // Step 1: For each detected OCR item, get product by ID

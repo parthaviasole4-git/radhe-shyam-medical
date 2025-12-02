@@ -24,18 +24,7 @@
             <!-- PHONE -->
             <div class="field">
                 <label>Phone <span class="required">*</span></label>
-                <input pInputText formControlName="phone" maxlength="10" placeholder="9876543210" />
-                <small class="error" *ngIf="f['phone'].touched && f['phone'].invalid">
-                    Phone is required & must be 10 digits
-                </small>
-            </div>
-
-            <div class="field">
-                <label>Email <span class="required">*</span></label>
-                <input pInputText formControlName="email" [readOnly]="true" placeholder="Email" />
-                <small class="error" *ngIf="f['email'].touched && f['email'].invalid">
-                    email is required
-                </small>
+                <input pInputText formControlName="phone" [readOnly]="true" />
             </div>
 
             <h3 class="address-title mt-3 mb-2">Delivery Address</h3>

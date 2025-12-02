@@ -15,7 +15,7 @@
     </ng-template>
 
     <ng-template pTemplate="end">
-        @if(this.isAdmin == "False"){
+        @if(this.isAdmin != "True"){
         <div class="cart-wrapper" routerLink="/cart">
             <p-button icon="pi pi-shopping-cart" [rounded]="true" [text]="true" />
             <span class="cart-badge" *ngIf="cartCount > 0">

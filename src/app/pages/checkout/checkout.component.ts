@@ -33,7 +33,6 @@ export class CheckoutComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       name: ['', Validators.required],
-      email: ['', Validators.required],
       phone: ['', Validators.required],
       house: ['', Validators.required],
       area: ['', Validators.required],
@@ -59,8 +58,7 @@ export class CheckoutComponent implements OnInit {
       this.user = user;
       this.form.patchValue({
         name: user.displayName ?? '',
-        email: user?.identifier ?? '',
-        phone: user.phone ?? '',
+        phone: user.identifier ?? '',
         house: user.address?.house ?? '',
         area: user.address?.area ?? '',
         city: user.address?.city ?? '',
@@ -81,7 +79,7 @@ export class CheckoutComponent implements OnInit {
     const completeProfileDto: CompleteProfileDto = {
       displayName: this.form.value.name,
       phone: this.form.value.phone,
-      email: this.form.value.email,
+      email: '',
       address: {
         house: this.form.value.house,
         area: this.form.value.area,

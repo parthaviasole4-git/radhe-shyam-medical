@@ -7,8 +7,7 @@
         <h4>{{ user?.displayName }}</h4>
         <p>{{ user?.address?.house }}, {{ user?.address?.area }}</p>
         <p>{{ user?.address?.city }} - {{ user?.address?.pincode }}</p>
-        <p>Phone: {{ user?.phone }}</p>
-        <p>Email: {{ user?.identifier }}</p>
+        <p>Phone: {{ user?.identifier }}</p>
 
         <button pButton label="Change Address" class="change-btn mt-2" (click)="openAddressDialog()"></button>
     </div>
@@ -44,11 +43,7 @@
     <form [formGroup]="form" class="form">
 
         <input type="text" placeholder="Full Name" formControlName="name">
-
-        <input type="email" placeholder="Email" formControlName="email" [readOnly]="true">
-
-        <input type="text" placeholder="Phone Number" formControlName="phone">
-
+        <input type="text" placeholder="Phone Number" formControlName="phone" [readOnly]="true">
         <input type="text" placeholder="House No, Street" formControlName="house">
         <input type="text" placeholder="Area / Landmark" formControlName="area">
         <input type="text" placeholder="City" formControlName="city">

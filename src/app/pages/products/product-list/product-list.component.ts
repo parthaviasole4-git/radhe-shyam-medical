@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { getUserIdFromToken } from '../../../helper/jwt.helper';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-product-list',
@@ -31,7 +32,8 @@ export class ProductListComponent implements OnInit {
     private readonly productService: ProductService,
     private readonly cartService: CartService,
     private readonly router: Router,
-    private readonly msg: MessageService
+    private readonly msg: MessageService,
+    private readonly authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -45,6 +47,10 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(product: any, event: Event) {
+    if(!this.authService.isLoggedIn()){
+      this.router.navigate(['/login']);
+      return
+    }
     event.stopPropagation();
 
     this.cartService.addToCart({ userId: this.userId, productId: product.id, qty: 1, price: product.price }).subscribe(() => {

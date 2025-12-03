@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
 
   categories = [
     { icon: 'pi pi-heart-fill', label: 'Pain Relief' },
-    { icon: 'pi pi-sun', label: 'Fever Medicines' },
+    { icon: 'pi pi-sun', label: 'Fever' },
     { icon: 'pi pi-cloud', label: 'Cold & Cough' },
     { icon: 'pi pi-star', label: 'Vitamins' }
   ];

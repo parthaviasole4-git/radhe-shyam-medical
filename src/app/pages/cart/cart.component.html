@@ -7,7 +7,7 @@
 
 
 <!-- CART ITEMS -->
-<div *ngFor="let item of cart" class="cart-card">
+<div *ngFor="let item of cart; trackBy: trackById" class="cart-card">
 
     <img [src]="item.productImageUrl" class="cart-img" />
 

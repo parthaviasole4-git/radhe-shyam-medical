@@ -15,7 +15,7 @@ export function getUserIdFromToken(): string {
   const token = localStorage.getItem('token');
   if (!token) return '';
   const decoded = decodeToken(token);
-  return decoded?.userId || null;
+  return decoded?.id || null;
 }
 
 export function getIsAdminFromToken() {

@@ -32,9 +32,15 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     this.cartService.getCart(this.userId).subscribe();
     this.cartService.cart$.subscribe((res) => {
-      this.cart = res;
+      this.cart = [...res].sort((a, b) =>
+        a.productName.localeCompare(b.productName)
+      );
       this.calculateTotal();
     });
+  }
+
+  trackById(index: number, item: any) {
+    return item.id;
   }
 
   calculateTotal() {
@@ -75,7 +81,6 @@ export class CartComponent implements OnInit {
   }
 
   addDetectedToCart() {
-
     if (!this.detectedItems.length) return;
 
     // Step 1: For each detected OCR item, get product by ID
